@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { gameConfigs } from '../constants/game-configs';
-import { GameTitle, TournamentFormat, TournamentStatus, gameTitleOptions, tournamentFormatOptions } from '../constants/enums';
+import { GameTitle, PlayerRank, TournamentFormat, TournamentStatus, gameTitleOptions, playerRankOptions, tournamentFormatOptions } from '../constants/enums';
 import { useTournament } from '../hooks/useTournament';
 import { mockWebSocket } from '../mock/websocket';
 import type { Tournament } from '../types/tournament';
 import { isNonEmpty } from '../utils/validation';
+import { playerRankLabels } from '../utils/format';
 
 export function CreateTournament() {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ export function CreateTournament() {
   const [game, setGame] = useState<GameTitle>(GameTitle.VALORANT);
   const [format, setFormat] = useState<TournamentFormat>(TournamentFormat.SINGLE_ELIM);
   const [rules, setRules] = useState('准时签到，尊重裁判判罚。');
+  const [minTeamSize, setMinTeamSize] = useState<number | ''>('');
+  const [minRank, setMinRank] = useState<PlayerRank | ''>('');
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -30,6 +33,8 @@ export function CreateTournament() {
       prize: '社区奖金池',
       status: TournamentStatus.REGISTRATION,
       rules,
+      minTeamSize: minTeamSize === '' ? undefined : minTeamSize,
+      minRank: minRank === '' ? undefined : minRank,
       teams: [],
       bracket: { rounds: [{ name: '待确认', matches: [] }] },
     };
@@ -47,6 +52,8 @@ export function CreateTournament() {
         <label>游戏<select value={game} onChange={(event) => setGame(event.target.value as GameTitle)}>{gameTitleOptions.map((option) => <option key={option} value={option}>{gameConfigs[option].label}</option>)}</select></label>
         <label>赛制<select value={format} onChange={(event) => setFormat(event.target.value as TournamentFormat)}>{tournamentFormatOptions.map((option) => <option key={option} value={option}>{option}</option>)}</select></label>
         <label>规则<textarea value={rules} onChange={(event) => setRules(event.target.value)} rows={5} /></label>
+        <label>最低人数要求<input type="number" min="1" placeholder="不限制" value={minTeamSize} onChange={(event) => setMinTeamSize(event.target.value === '' ? '' : Number(event.target.value))} /></label>
+        <label>最低段位要求<select value={minRank} onChange={(event) => setMinRank(event.target.value as PlayerRank | '')}><option value="">不限制</option>{playerRankOptions.map((option) => <option key={option} value={option}>{playerRankLabels[option]}</option>)}</select></label>
         <button className="button button--primary" type="submit">保存并开放报名</button>
       </form>
     </div>

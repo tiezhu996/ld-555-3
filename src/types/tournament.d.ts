@@ -1,4 +1,4 @@
-import type { GameTitle, TournamentFormat, TournamentStatus } from '../constants/enums';
+import type { GameTitle, PlayerRank, TournamentFormat, TournamentStatus } from '../constants/enums';
 
 export interface BracketRound {
   name: string;
@@ -23,6 +23,8 @@ export interface Tournament {
   prize: string;
   status: TournamentStatus;
   rules: string;
+  minTeamSize?: number;
+  minRank?: PlayerRank;
   teams: string[];
   bracket: {
     rounds: BracketRound[];

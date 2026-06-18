@@ -1,4 +1,4 @@
-import type { TournamentFormat, TournamentStatus } from '../constants/enums';
+import { PlayerRank, type TournamentFormat, type TournamentStatus } from '../constants/enums';
 
 export function winRate(wins: number, losses: number): number {
   const total = wins + losses;
@@ -21,3 +21,31 @@ export const tournamentStatusLabels: Record<TournamentStatus, string> = {
   IN_PROGRESS: '进行中',
   FINISHED: '已结束',
 };
+
+const rankOrder: PlayerRank[] = [
+  PlayerRank.BRONZE,
+  PlayerRank.SILVER,
+  PlayerRank.GOLD,
+  PlayerRank.PLATINUM,
+  PlayerRank.DIAMOND,
+  PlayerRank.MASTER,
+  PlayerRank.GRANDMASTER,
+];
+
+export const playerRankLabels: Record<PlayerRank, string> = {
+  BRONZE: '青铜',
+  SILVER: '白银',
+  GOLD: '黄金',
+  PLATINUM: '铂金',
+  DIAMOND: '钻石',
+  MASTER: '大师',
+  GRANDMASTER: '宗师',
+};
+
+export function getRankIndex(rank: PlayerRank): number {
+  return rankOrder.indexOf(rank);
+}
+
+export function isRankAtLeast(playerRank: PlayerRank, minRank: PlayerRank): boolean {
+  return getRankIndex(playerRank) >= getRankIndex(minRank);
+}

@@ -52,6 +52,10 @@ p { color: var(--muted); line-height: 1.7; }
 .form-panel { display: grid; gap: 16px; padding: 22px; margin-top: 18px; }
 .form-panel label { display: grid; gap: 8px; color: var(--muted); font-weight: 700; }
 .detail-hero, .team-hero { margin-bottom: 18px; padding: clamp(22px, 4vw, 42px); border: 1px solid var(--line); border-radius: 8px; background: var(--surface); display: grid; gap: 12px; }
+.detail-requirements { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+.detail-requirements__title { font-weight: 700; color: var(--text); }
+.detail-requirements span { padding: 4px 10px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 6px; }
+.button:disabled { opacity: 0.6; cursor: not-allowed; }
 .team-hero { grid-template-columns: auto 1fr auto; align-items: center; }
 .bracket { border: 1px solid var(--line); border-radius: 8px; padding: 16px; background: var(--bg-soft); overflow-x: auto; }
 .bracket__label { color: var(--accent); font-weight: 900; margin-bottom: 12px; }
